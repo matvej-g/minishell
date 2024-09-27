@@ -6,17 +6,28 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/23 13:28:39 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/27 13:09:49 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_input(void)
+char	*ft_get_input(t_cmd *cmd, t_env *env)
 {
 	char	*input;
 
 	input = readline(" -- minishell -- $ ");
+	if (g_signal_received == SIGINT)
+	{
+		//free_cmd(cmd);
+		return (NULL);
+	}
+	if (input == NULL || ft_strcmp(input, "exit") == 0)
+	{
+		printf("exit");
+		free_all(cmd, env);
+		exit (0);
+	}
 	return (input);
 }
 

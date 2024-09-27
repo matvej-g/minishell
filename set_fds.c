@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:51:08 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/23 16:32:03 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/27 11:49:20 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void check_pipe_contents(int pipe_fd[2])
+/* void check_pipe_contents(int pipe_fd[2])
 {
     char buffer[1024];
     int bytes_read;
@@ -39,7 +39,7 @@ void check_pipe_contents(int pipe_fd[2])
 
     // Close the read end of the pipe after reading
     close(pipe_fd[0]);
-}
+} */
 
 
 t_cmd	*ft_set_fds(t_cmd *temp)
@@ -82,8 +82,7 @@ t_cmd	*ft_set_fds(t_cmd *temp)
 
 			if (pipe(pipe_fd) == -1)
 			{
-				perror("pipe");
-				return (NULL);
+				perror("pipe failed");
 			}
 			while (1)
 			{
@@ -91,19 +90,17 @@ t_cmd	*ft_set_fds(t_cmd *temp)
 				if (ft_strcmp(input, temp->next->args[0]) == 0)
 				{
 					free(input);
-					break;
-				}	
+					break ;
+				}
 				write(pipe_fd[1], input, strlen(input));
 				write(pipe_fd[1], "\n", 1);
 				free(input);
 			}
 			close(pipe_fd[1]);
-
 			temp->input_fd = pipe_fd[0];
-
-			check_pipe_contents(pipe_fd);
+			close(pipe_fd[0]);
 		}
-		else if(ft_strcmp(temp->operator, "|") == 0)
+		else if (ft_strcmp(temp->operator, "|") == 0)
 		{
 			int	pipe_fd[2];
 			if (pipe(pipe_fd) == -1)
@@ -111,7 +108,7 @@ t_cmd	*ft_set_fds(t_cmd *temp)
 				perror("pipe");
 				return (NULL);
 			}
-			temp->output_fd = pipe_fd[0];
+			temp->output_fd = pipe_fd[1];
 			if(temp->output_fd == -1)
 			{
 				perror("pipe");
@@ -119,7 +116,7 @@ t_cmd	*ft_set_fds(t_cmd *temp)
 			}
 			if (temp->next != NULL)
 			{
-				temp->next->input_fd = pipe_fd[1];
+				temp->next->input_fd = pipe_fd[0];
 				if (temp->next->input_fd == -1)
 				{
 					perror("pipe");

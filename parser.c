@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:11:55 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/23 15:31:24 by merdal           ###   ########.fr       */
+/*   Updated: 2024/09/24 13:06:46 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_cmd	*ft_new_node(void)
 
 	node->operator = NULL;
 	node->args = NULL;
-	node->input_fd = 0;
-	node->output_fd = 1;
+	node->input_fd = STDIN_FILENO;
+	node->output_fd = STDOUT_FILENO;
 	node->next = NULL;
 
 	return (node);

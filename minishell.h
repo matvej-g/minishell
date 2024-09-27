@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/23 15:11:47 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/27 14:26:10 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,12 @@
 # include <string.h>
 # include <fcntl.h>
 # include <limits.h>				//PATH_MAX
+# include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef enum e_token_type
-{
-	TOKEN_CMD,
-	TOKEN_ARG,
-	TOKEN_PIPE,
-	TOKEN_OPERATOR,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-}t_token_type;
-
+extern volatile sig_atomic_t	g_signal_received;
 
 typedef struct s_cmd
 {
@@ -43,12 +35,6 @@ typedef struct s_cmd
 	int				output_fd;
 	struct s_cmd	*next;
 }t_cmd;
-
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-}t_token;
 
 typedef struct s_varlst
 {
@@ -61,8 +47,6 @@ typedef struct s_env
 {
 	char		**envp;
 	t_varlst	*envp_list;
-	char		*key;
-	char		*value;
 	long long	exit_status;
 }t_env;
 
@@ -80,7 +64,7 @@ int			ft_count_tokens(char *input);
 void		ft_return_and_exit(char *error, int exit_status, t_env *env);
 
 //_______________________input.c___________________________________
-char		*ft_get_input(void);
+char		*ft_get_input(t_cmd *cmd, t_env *env);
 int			ft_check_input(char *input, t_env *env);
 
 //_______________________input2.c__________________________________
@@ -92,16 +76,17 @@ int			ft_check_syntax_op(char *input, t_env *env);
 char		*ft_handle_dollar(char *input, t_env *env);
 
 //_______________________ft_init.c_________________________________
+void		ft_free_split(char **arr);
 void		ft_init(char **envp, t_env *env);
 void		add_varlst_node(t_varlst **head, t_varlst *new_node);
 t_varlst	*new_varlst_node(char *var_name, char *var_value);
 
 //_______________________ft_check_args.c___________________________
 void		*ft_check_args(const t_cmd *cmd, t_env *env);
+void		redirect_fd(const t_cmd *cmd);
 void		execute_parent(const t_cmd *cmd, t_env *env);
 void		execute_child(const t_cmd *cmd, t_env *env);
-void		redirect_fd(const t_cmd *cmd);
-void		ft_clear(void);
+void		check_executable(const t_cmd *cmd, t_env *env);
 
 //_______________________ft_echo.c_________________________________
 char		*ft_append_char_struct(const t_cmd *cmd, int i);
@@ -115,6 +100,7 @@ void		ft_pwd(void);
 
 //_______________________ft_exe.c__________________________________
 void		ft_exe(const t_cmd *cmd, t_env *env);
+void		ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path);
 
 //_______________________ft_export.c_______________________________
 void		ft_export(const t_cmd *cmd, t_env *env);
@@ -129,5 +115,18 @@ void		ft_env(t_env *env);
 void		ft_unset(const t_cmd *cmd, t_env *env);
 
 //_______________________ft_exit.c_________________________________
+
+//_______________________ft_clear.c_________________________________
+void		ft_clear(void);
+
+//_______________________signal_handler.c___________________________
+void		signal_handler(int signum);
+void		child_signal_handler(int signum);
+void		init_signal_handler(void);
+
+//_______________________free_memory.c______________________________
+void		free_all(t_cmd *cmd, t_env *env);
+void		free_cmd(t_cmd *cmd);
+void		free_env_lst(t_env *env);
 
 #endif

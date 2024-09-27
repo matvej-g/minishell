@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:16:42 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/19 11:41:35 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/24 14:56:33 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_export(const t_cmd *cmd, t_env *env)
 		return ;
 	}
 	flag = check_varlst(templst, var_name, var_value, cmd);
-	printf("\n\n flag= %d \n\n", flag);
 	if (flag == 0)
 		return (free(var_name), free(var_value));
 	if (flag == -1)
@@ -58,7 +57,7 @@ void	get_var_str(const t_cmd *cmd, char **var_name, char **var_value)
 		*var_value = ft_strdup(split[1]);
 	else
 		*var_value = ft_strdup("");
-	free(split);
+	ft_free_split(split);
 	return ;
 }
 
@@ -73,7 +72,6 @@ int	check_varlst(t_varlst *templst, char *var_name,
 		if (0 == ft_strcmp(templst->var_name, var_name)
 			&& NULL != ft_strchr(cmd->args[1], '='))
 		{
-			printf("\nreplace\n");
 			free(templst->var_value);
 			templst->var_value = strdup(var_value);
 			return (-1);

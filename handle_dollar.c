@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:36:45 by merdal            #+#    #+#             */
-/*   Updated: 2024/07/19 15:17:20 by merdal           ###   ########.fr       */
+/*   Updated: 2024/09/26 16:35:00 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*ft_replace(char *input, int i, t_env *env)
 char	*ft_exitstatus(t_env *env)
 {
 	char	*exit;
-	
+
 	exit = ft_lltoa(env->exit_status);
 	env->exit_status = 0;
 	return (exit);
@@ -82,7 +82,7 @@ char	*ft_exitstatus(t_env *env)
 char	*ft_handle_dollar(char *input, t_env *env)
 {
 	int		i;
-	int 	quote;
+	int		quote;
 	char	*new_input = NULL;
 
 	i = 0;
