@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:08 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/24 14:46:46 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/29 15:16:49 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ void	ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path)
 			{
 				if (-1 == execve(dir_path, cmd->args, env->envp))
 					perror("execve failed");
+				free(dir_path);
+				free(tmp);
+				return ;
 			}
 			free(dir_path);
 			++tmp_path;
 		}
 		free(tmp);
+		printf("command not found\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:36:45 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/26 16:35:00 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/29 15:52:02 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	*ft_replace(char *input, int i, t_env *env)
 	new_input = NULL;
 	if (!input[i] || input[i] == ' ' || input[i] == '\"' || input[i] == '\'')
 		return (ft_single_dollar(new_input));
-	while (input[len] && input[len] != '\"' && input[len] != '\'' && input[len] != ' ')
+	while (input[len] && input[len]
+		!= '\"' && input[len] != '\'' && input[len] != ' ')
 		len++;
 	env_variable = malloc(sizeof(char) * (len - i) + 1);
 	if (!env_variable)
@@ -83,10 +84,11 @@ char	*ft_handle_dollar(char *input, t_env *env)
 {
 	int		i;
 	int		quote;
-	char	*new_input = NULL;
+	char	*new_input;
 
 	i = 0;
 	quote = 0;
+	new_input = NULL;
 	while (input[i])
 	{
 		if (input[i] == '\'' || input[i] == '\"')

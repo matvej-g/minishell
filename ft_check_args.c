@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/26 15:21:35 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/29 15:50:27 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ft_check_args(const t_cmd *cmd, t_env *env)
 	const t_cmd	*tmp_cmd;
 
 	tmp_cmd = cmd;
+	if (tmp_cmd == NULL)
+		return (NULL);
 	if (tmp_cmd->args == NULL)
 		return (NULL);
 	while (tmp_cmd)
@@ -64,8 +66,6 @@ void	execute_parent(const t_cmd *cmd, t_env *env)
 		ft_export(cmd, env);
 	else if (0 == ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(cmd, env);
-	//else if (0 == ft_strcmp(cmd->args[0], "exit"))
-	//	ft_exit(cmd, env);
 }
 
 void	execute_child(const t_cmd *cmd, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/27 14:26:10 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/29 14:55:19 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_cmd
 	char			**args;
 	int				input_fd;
 	int				output_fd;
+	char			*heredoc_delimiter;
 	struct s_cmd	*next;
 }t_cmd;
 
@@ -62,9 +63,14 @@ char		**ft_create_array(char *input, t_env *env);
 int			ft_token_len(char *input, int i);
 int			ft_count_tokens(char *input);
 void		ft_return_and_exit(char *error, int exit_status, t_env *env);
+void		ft_fd_rdr(t_cmd *temp);
+void		ft_fd_rdrapp(t_cmd *temp);
+void		ft_fd_rdr2(t_cmd *temp);
+void		ft_fd_heredoc(t_cmd *temp);
+void		ft_pipe(t_cmd *temp);
 
 //_______________________input.c___________________________________
-char		*ft_get_input(t_cmd *cmd, t_env *env);
+char		*ft_get_input(t_env *env);
 int			ft_check_input(char *input, t_env *env);
 
 //_______________________input2.c__________________________________

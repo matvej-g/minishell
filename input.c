@@ -6,35 +6,34 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/27 13:09:49 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/29 15:52:27 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_input(t_cmd *cmd, t_env *env)
+char	*ft_get_input(t_env *env)
 {
 	char	*input;
 
 	input = readline(" -- minishell -- $ ");
-	if (g_signal_received == SIGINT)
-	{
-		//free_cmd(cmd);
-		return (NULL);
-	}
 	if (input == NULL || ft_strcmp(input, "exit") == 0)
 	{
-		printf("exit");
-		free_all(cmd, env);
+		printf("exit\n");
 		exit (0);
+	}
+	else if (g_signal_received == 130)
+	{
+		env->exit_status = 1;
+		return (input);
 	}
 	return (input);
 }
 
 int	ft_check_quotes(char *input)
 {
-	char 	quote_type;
-	int 	i;
+	char	quote_type;
+	int		i;
 
 	quote_type = 0;
 	i = 0;
@@ -60,19 +59,14 @@ int	ft_check_quotes(char *input)
 
 int	ft_check_input(char *input, t_env *env)
 {
-	if (input == NULL)
-	{
-		ft_return_and_exit("Error: input is NULL", 1, env);
-		return (1);
-	}
 	if (input[0] == '\0')
 	{
-		ft_return_and_exit("Error: input is empty", 1, env);
+		ft_return_and_exit(NULL, 2, env);
 		return (1);
 	}
 	if (ft_check_quotes(input))
 	{
-		ft_return_and_exit("Error: unclosed quotes", 1, env);
+		ft_return_and_exit("Error: unclosed quotes", 2, env);
 		return (1);
 	}
 	ft_check_syntax(input, env);

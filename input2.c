@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:54:54 by merdal            #+#    #+#             */
-/*   Updated: 2024/07/14 17:38:54 by merdal           ###   ########.fr       */
+/*   Updated: 2024/09/29 15:59:39 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_check_syntax(char *input, t_env *env)
 		ft_return_and_exit("Error: syntax error redirection", 1, env);
 		return (1);
 	}
-	if (input[ft_strlen(input) - 1] == '>' && input[ft_strlen(input) - 2] == '>')
+	if (input[ft_strlen(input) - 1]
+		== '>' && input[ft_strlen(input) - 2] == '>')
 	{
 		ft_return_and_exit("Error: syntax error redirection", 1, env);
 		return (1);
@@ -74,11 +75,12 @@ int	ft_check_syntax_op(char *input, t_env *env)
 
 	i = 0;
 	quote = 0;
-	while(input[i])
+	while (input[i])
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 			quote = 1;
-		if ((input[i] == '<' || input[i] == '>' || input[i] == '|') && quote == 0)
+		if ((input[i] == '<' || input[i]
+				== '>' || input[i] == '|') && quote == 0)
 		{
 			if (input[i] == input[i + 1])
 				i = i + 2;
