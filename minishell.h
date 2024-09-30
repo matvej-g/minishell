@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/29 14:55:19 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/30 15:36:16 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ void		init_signal_handler(void);
 void		free_all(t_cmd *cmd, t_env *env);
 void		free_cmd(t_cmd *cmd);
 void		free_env_lst(t_env *env);
+void		free_cmd_list(t_cmd *cmd);
 
 #endif

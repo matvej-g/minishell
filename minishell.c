@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:19:36 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/29 15:20:17 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/30 15:36:29 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ volatile sig_atomic_t	g_signal_received = 0;
     }
 } */
 
-void	print_cmd_struct(const t_cmd *cmd)
+/* void	print_cmd_struct(const t_cmd *cmd)
 {
 	int i = 0;
 
@@ -61,7 +61,7 @@ void	print_cmd_struct(const t_cmd *cmd)
 			break; // Exit the loop if there is no next command
 		}
 	}
-}
+} */
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -87,9 +87,9 @@ int	main(int argc, char **argv, char **envp)
 		ft_check_input(input, env);
 		add_history(input);
 		cmd = ft_parser(input, env);
-		print_cmd_struct(cmd);
+		//print_cmd_struct(cmd);
 		ft_check_args(cmd, env);
-		free_all(cmd, env);
+		free_cmd_list(cmd);
 	}
 	return (0);
 }
