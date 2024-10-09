@@ -6,73 +6,59 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:50:18 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/30 15:39:08 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/08 14:44:23 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	free_all(t_cmd *cmd, t_env *env)
+void	free_all(t_cmd *cmd, t_env *env)
 {
 	if (cmd)
 		free_cmd(cmd);
 	if (env)
 		free_env_lst(env);
-}*/
-
-void	free_cmd_list(t_cmd *cmd)
-{
-	t_cmd	*next;
-
-	while (cmd != NULL)
-	{
-		next = cmd->next;
-		if (cmd->operator)
-			free(cmd->operator);
-		cmd->operator = NULL;
-		if (cmd->args)
-		{
-			ft_free_split(cmd->args);
-			free(cmd->args);
-		}
-		cmd->args = NULL;
-		if (cmd->heredoc_delimiter)
-			free(cmd->heredoc_delimiter);
-		cmd->heredoc_delimiter = NULL;
-		free(cmd);
-		cmd = next;
-	}
 }
-/* 
-void	free_cmd_members(t_cmd *cmd)
+
+void	free_cmd(t_cmd *cmd)
 {
-	t_cmd	*tmp;
+	t_cmd	*temp;
+	int		i;
 
 	while (cmd)
 	{
-		 if (cmd->operator)
-			free(cmd->operator);
-		if (cmd->args)
-			ft_free_split(cmd->args);
-		close(cmd->input_fd);
-		close(cmd->output_fd);
-		tmp = cmd;
+		i = -1;
+		temp = cmd;
 		cmd = cmd->next;
-		free(tmp);
+		if (temp->operator)
+			free(temp->operator);
+		if (temp->heredoc_delimiter)
+			free(temp->heredoc_delimiter);
+		if (temp->args)
+		{
+			while (temp->args[++i])
+				free(temp->args[i]);
+			free(temp->args);
+		}
+		free(temp);
 	}
 }
 
 void	free_env_lst(t_env *env)
 {
-	t_varlst	*tmp;
+	t_varlst	*temp;
+	t_varlst	*next;	
 
-	while (env && env->envp_list)
+	temp = env->envp_list;
+	while (temp)
 	{
-		free(env->envp_list->var_name);
-		free(env->envp_list->var_value);
-		tmp = env->envp_list;
-		env->envp_list = env->envp_list->next;
-		free(tmp);
+		next = temp->next;
+		if (temp->var_name)
+			free(temp->var_name);
+		if (temp->var_value)
+			free(temp->var_value);
+		free(temp);
+		temp = next;
 	}
+	free(env);
 }
- */

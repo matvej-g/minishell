@@ -6,12 +6,12 @@
 #    By: mgering <mgering@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/28 12:50:20 by merdal            #+#    #+#              #
-#    Updated: 2024/09/30 11:44:20 by mgering          ###   ########.fr        #
+#    Updated: 2024/10/07 16:11:43 by mgering          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 LDFLAGS = -Llibft -lft -lreadline
 NAME = 	minishell
 
@@ -19,7 +19,7 @@ SRCS =	minishell.c input.c input2.c handle_dollar.c \
 		ft_init.c utils.c tokenize.c parser.c ft_check_args.c \
 		build_in_cmd/ft_echo.c build_in_cmd/ft_cd.c \
 		build_in_cmd/ft_pwd.c build_in_cmd/ft_exe.c build_in_cmd/ft_export.c build_in_cmd/ft_env.c \
-		build_in_cmd/ft_unset.c build_in_cmd/ft_clear.c set_fds.c utils2.c signal_handler.c free_memory.c
+		build_in_cmd/ft_unset.c build_in_cmd/ft_clear.c set_fds.c utils2.c utils3.c utils4.c signal_handler.c free_memory.c
 
 
 OBJS = $(SRCS:.c=.o)

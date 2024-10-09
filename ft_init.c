@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
+/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:39:20 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/18 13:50:11 by mgering          ###   ########.fr       */
+/*   Updated: 2024/09/30 11:55:18 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ void	ft_init(char **envp, t_env *env)
 	env->envp = envp;
 	env->envp_list = ft_init_varlst(envp);
 	env->exit_status = 0;
+	env->exec_flag = 0;
 }

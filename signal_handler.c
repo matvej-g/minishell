@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:17:36 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/29 15:55:17 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:27:16 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	signal_handler(int signum)
 
 void	child_signal_handler(int signum)
 {
-	write(STDOUT_FILENO, "\n", 1);
+	//write(STDOUT_FILENO, "\n", 1);
 	g_signal_received = (128 + signum);
 	exit (g_signal_received);
 }

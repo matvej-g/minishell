@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:36:45 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/29 15:52:02 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:24:37 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*ft_replace(char *input, int i, t_env *env)
 		j++;
 	}
 	new_input = ft_search_env_variable(env_variable, env);
+	free(env_variable);
 	return (new_input);
 }
 
@@ -91,7 +92,7 @@ char	*ft_handle_dollar(char *input, t_env *env)
 	new_input = NULL;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '\"')
+		if (input[i] == '\"')
 			quote = 1;
 		if (input[i] == '$' && input[i + 1] == '?')
 			new_input = ft_exitstatus(env);

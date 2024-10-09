@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
+/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/29 15:50:27 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/07 11:58:36 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	*ft_check_args(const t_cmd *cmd, t_env *env)
 	if (tmp_cmd == NULL)
 		return (NULL);
 	if (tmp_cmd->args == NULL)
+		return (NULL);
+	if (env->exec_flag == 1)
 		return (NULL);
 	while (tmp_cmd)
 	{

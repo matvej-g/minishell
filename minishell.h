@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/09/30 15:36:16 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/08 14:37:27 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_env
 	char		**envp;
 	t_varlst	*envp_list;
 	long long	exit_status;
+	int			exec_flag;
 }t_env;
 
 //_______________________minishell.c_______________________________
@@ -68,6 +69,10 @@ void		ft_fd_rdrapp(t_cmd *temp);
 void		ft_fd_rdr2(t_cmd *temp);
 void		ft_fd_heredoc(t_cmd *temp);
 void		ft_pipe(t_cmd *temp);
+int			ft_is_operator(char *str);
+int			ft_array_len(char **array, int i);
+void		ft_return_and_exit(char *error, int exit_status, t_env *env);
+int			ft_token_len(char *input, int i);
 
 //_______________________input.c___________________________________
 char		*ft_get_input(t_env *env);

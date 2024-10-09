@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:16:42 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/24 14:56:33 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/08 13:28:59 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	ft_export(const t_cmd *cmd, t_env *env)
 	if (flag == 0)
 		return (free(var_name), free(var_value));
 	if (flag == -1)
-		return ;
+		return (free(var_name), free(var_value));
 	if (flag == 1)
 		add_varlst_node(&env->envp_list, new_varlst_node(var_name, var_value));
+	return (free(var_name), free(var_value));
 }
 
 void	get_var_str(const t_cmd *cmd, char **var_name, char **var_value)
