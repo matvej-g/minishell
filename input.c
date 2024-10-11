@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/07 16:41:02 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/10 15:12:22 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_get_input(t_env *env)
 	char	*input;
 
 	input = readline(" -- minishell -- $ ");
-	if (input == NULL || ft_strcmp(input, "exit") == 0)
+	if (input == NULL || ft_strnstr(input, "exit", 4) != NULL)
 	{
 		free_env_lst(env);
 		printf("exit\n");

@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:08 by mgering           #+#    #+#             */
-/*   Updated: 2024/09/29 15:16:49 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:05:57 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,25 @@ void	ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path)
 	if (execve(cmd->args[0], cmd->args, env->envp) == -1)
 	{
 		tmp = ft_strjoin("/", cmd->args[0]);
-		while (*tmp_path)
+		if (tmp_path != NULL)
 		{
-			dir_path = ft_strjoin(*tmp_path, tmp);
-			if (0 == access(dir_path, X_OK))
+			while (*tmp_path)
 			{
-				if (-1 == execve(dir_path, cmd->args, env->envp))
-					perror("execve failed");
+				dir_path = ft_strjoin(*tmp_path, tmp);
+				if (0 == access(dir_path, X_OK))
+				{
+					if (-1 == execve(dir_path, cmd->args, env->envp))
+						perror("execve failed");
+					free(dir_path);
+					free(tmp);
+					return ;
+				}
 				free(dir_path);
-				free(tmp);
-				return ;
+				++tmp_path;
 			}
-			free(dir_path);
-			++tmp_path;
 		}
 		free(tmp);
 		printf("command not found\n");
+		exit(127);
 	}
 }

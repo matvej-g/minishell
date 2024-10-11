@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/08 14:37:27 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 11:41:26 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ char		*ft_append_char_struct(const t_cmd *cmd, int i);
 void		ft_echo(const t_cmd *cmd);
 
 //_______________________ft_cd.c___________________________________
-void		ft_cd(const t_cmd *cmd);
+void		ft_cd(const t_cmd *cmd, t_env *env);
+void		check_home_path(t_varlst *varlst, char **path);
 
 //_______________________ft_pwd.c__________________________________
 void		ft_pwd(void);

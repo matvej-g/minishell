@@ -6,11 +6,39 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:51:08 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/08 15:14:52 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:27:12 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_cmd	*ft_fix_struct(t_cmd *cmd_head)
+{
+	t_cmd	*current;
+	t_cmd	*delete;
+
+	current = cmd_head;
+	if (current->operator && ft_strcmp(current->operator, "<") == 0
+		&& current->next->operator
+		&& ft_strcmp(current->next->operator, "|") == 0)
+	{
+		current->output_fd = current->next->output_fd;
+		delete = current->next;
+		current->next = current->next->next;
+		delete->next = NULL;
+		free_cmd(delete);
+	}
+	else if (current->operator && ft_strcmp(current->operator, "<<") == 0
+		&& current->next->operator)
+	{
+		current->output_fd = current->next->output_fd;
+		delete = current->next;
+		current->next = current->next->next;
+		delete->next = NULL;
+		free_cmd(delete);
+	}
+	return (cmd_head);
+}
 
 t_cmd	*ft_set_fds(t_cmd *temp)
 {
@@ -31,5 +59,6 @@ t_cmd	*ft_set_fds(t_cmd *temp)
 			ft_pipe(temp);
 		temp = temp->next;
 	}
+	new_head = ft_fix_struct(new_head);
 	return (new_head);
 }

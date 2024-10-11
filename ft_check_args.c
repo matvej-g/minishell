@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/07 11:58:36 by merdal           ###   ########.fr       */
+/*   Updated: 2024/10/10 13:46:20 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	execute_parent(const t_cmd *cmd, t_env *env)
 {
 	redirect_fd(cmd);
 	if (0 == ft_strcmp(cmd->args[0], "cd"))
-		ft_cd(cmd);
+		ft_cd(cmd, env);
 	else if (0 == ft_strcmp(cmd->args[0], "export"))
 		ft_export(cmd, env);
 	else if (0 == ft_strcmp(cmd->args[0], "unset"))
@@ -73,6 +73,7 @@ void	execute_parent(const t_cmd *cmd, t_env *env)
 void	execute_child(const t_cmd *cmd, t_env *env)
 {
 	int	pid ;
+	int	status;
 
 	pid = fork();
 	if (pid == 0)
@@ -85,7 +86,9 @@ void	execute_child(const t_cmd *cmd, t_env *env)
 	else if (pid > 0)
 	{
 		signal (SIGINT, SIG_IGN);
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			env->exit_status = WEXITSTATUS(status);
 		init_signal_handler();
 		if (cmd->input_fd != STDIN_FILENO)
 			close(cmd->input_fd);
