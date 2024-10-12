@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:08 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/11 12:05:57 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:44:42 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,39 @@ void	ft_exe(const t_cmd *cmd, t_env *env)
 
 void	ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path)
 {
-	char		*dir_path;
 	char		*tmp;
 
-	dir_path = NULL;
 	tmp = NULL;
 	if (execve(cmd->args[0], cmd->args, env->envp) == -1)
 	{
 		tmp = ft_strjoin("/", cmd->args[0]);
-		if (tmp_path != NULL)
-		{
-			while (*tmp_path)
-			{
-				dir_path = ft_strjoin(*tmp_path, tmp);
-				if (0 == access(dir_path, X_OK))
-				{
-					if (-1 == execve(dir_path, cmd->args, env->envp))
-						perror("execve failed");
-					free(dir_path);
-					free(tmp);
-					return ;
-				}
-				free(dir_path);
-				++tmp_path;
-			}
-		}
+		ft_exe3(cmd, env, tmp, tmp_path);
 		free(tmp);
 		printf("command not found\n");
 		exit(127);
+	}
+}
+
+void	ft_exe3(const t_cmd *cmd, t_env *env, char *tmp, char **tmp_path)
+{
+	char	*dir_path;
+
+	dir_path = NULL;
+	if (tmp_path != NULL)
+	{
+		while (*tmp_path)
+		{
+			dir_path = ft_strjoin(*tmp_path, tmp);
+			if (0 == access(dir_path, X_OK))
+			{
+				if (-1 == execve(dir_path, cmd->args, env->envp))
+					perror("execve failed");
+				free(dir_path);
+				free(tmp);
+				return ;
+			}
+			free(dir_path);
+			++tmp_path;
+		}
 	}
 }

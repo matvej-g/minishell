@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/10 15:12:22 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 16:18:32 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_check_input(char *input, t_env *env)
 {
 	if (input[0] == '\0')
 	{
-		ft_return_and_exit(NULL, 2, env);
+		ft_return_and_exit(NULL, 0, env);
 		return (1);
 	}
 	if (ft_check_quotes(input))

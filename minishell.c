@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:19:36 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/10 16:04:59 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 12:15:27 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ volatile sig_atomic_t	g_signal_received = 0;
 /* void check_leaks(void)
 {
     system("leaks minishell");
+	//atexit(check_leaks);
 } */
 
 /* void	print_arrays(char **arrays)
@@ -76,7 +77,6 @@ int	main(int argc, char **argv, char **envp)
 	char				*input;
 
 	(void)argv;
-	//atexit(check_leaks);
 	env = malloc(sizeof(t_env));
 	env->envp = envp;
 	ft_init(envp, env);

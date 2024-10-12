@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:16:42 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/08 13:28:59 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 12:25:57 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_export(const t_cmd *cmd, t_env *env)
 	{
 		while (templst)
 		{
-			printf("declare -x %s=\"%s\"\n",
+			printf("%s=\"%s\"\n",
 				templst->var_name, templst->var_value);
 			templst = templst->next;
 		}
@@ -77,7 +77,7 @@ int	check_varlst(t_varlst *templst, char *var_name,
 			templst->var_value = strdup(var_value);
 			return (-1);
 		}
-		if (0 == ft_strcmp(templst->var_name, var_name))
+		if (NULL == ft_strchr(cmd->args[1], '='))
 			return (0);
 		if (templst->next)
 			templst = templst->next;

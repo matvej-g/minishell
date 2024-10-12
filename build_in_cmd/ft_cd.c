@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 18:52:57 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/11 11:41:18 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 12:05:16 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_cd(const t_cmd *cmd, t_env *env)
 		check_home_path(varlst, &path);
 	else
 		path = cmd->args[1];
-	if (chdir(path) != 0)
-		perror("cd path");
+	if (0 != access(path, X_OK) || 0 != chdir(path))
+		ft_return_and_exit("cd: permission denied", 1, env);
 	else
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)

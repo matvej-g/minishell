@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/11 11:41:26 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:44:52 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void		ft_pwd(void);
 //_______________________ft_exe.c__________________________________
 void		ft_exe(const t_cmd *cmd, t_env *env);
 void		ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path);
+void		ft_exe3(const t_cmd *cmd, t_env *env, char *tmp, char **tmp_path);
 
 //_______________________ft_export.c_______________________________
 void		ft_export(const t_cmd *cmd, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:36:45 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/10 16:10:56 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/11 14:50:16 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_replace(char *input, int i, t_env *env)
 
 	i++;
 	len = i;
-	j = 0;
+	j = -1;
 	new_input = NULL;
 	if (!input[i] || input[i] == ' ' || input[i] == '\"' || input[i] == '\'')
 		return (ft_single_dollar(new_input));
@@ -63,11 +63,10 @@ char	*ft_replace(char *input, int i, t_env *env)
 	env_variable = malloc(sizeof(char) * (len - i) + 1);
 	if (!env_variable)
 		return (NULL);
-	while (j < len)
+	while (++j < len)
 	{
 		env_variable[j] = input[i];
 		i++;
-		j++;
 	}
 	new_input = ft_search_env_variable(env_variable, env);
 	free(env_variable);

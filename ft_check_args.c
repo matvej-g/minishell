@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/10 13:46:20 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:05:50 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	*ft_check_args(const t_cmd *cmd, t_env *env)
 
 	tmp_cmd = cmd;
 	if (tmp_cmd == NULL)
+	{
+		env->exit_status = g_signal_received;
 		return (NULL);
+	}
 	if (tmp_cmd->args == NULL)
 		return (NULL);
 	if (env->exec_flag == 1)
@@ -79,6 +82,7 @@ void	execute_child(const t_cmd *cmd, t_env *env)
 	if (pid == 0)
 	{
 		signal(SIGINT, child_signal_handler);
+		signal(SIGQUIT, child_signal_handler);
 		redirect_fd(cmd);
 		check_executable(cmd, env);
 		exit(EXIT_SUCCESS);
@@ -89,6 +93,8 @@ void	execute_child(const t_cmd *cmd, t_env *env)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			env->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			env->exit_status = 128 + WTERMSIG(status);
 		init_signal_handler();
 		if (cmd->input_fd != STDIN_FILENO)
 			close(cmd->input_fd);
@@ -101,7 +107,6 @@ void	execute_child(const t_cmd *cmd, t_env *env)
 		exit(EXIT_FAILURE);
 	}
 }
-
 void	check_executable(const t_cmd *cmd, t_env *env)
 {
 	if (0 == ft_strcmp(cmd->args[0], "echo"))
