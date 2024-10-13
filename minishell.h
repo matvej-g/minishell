@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/11 14:44:52 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 14:06:34 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_env
 }t_env;
 
 //_______________________minishell.c_______________________________
+void		shell_loop(t_cmd *cmd, t_env *env);
+
 //_______________________ft_parser.c_______________________________
 t_cmd		*ft_parser(char *input, t_env *env);
 t_cmd		*ft_set_fds(t_cmd *temp);
@@ -91,6 +93,10 @@ void		ft_free_split(char **arr);
 void		ft_init(char **envp, t_env *env);
 void		add_varlst_node(t_varlst **head, t_varlst *new_node);
 t_varlst	*new_varlst_node(char *var_name, char *var_value);
+
+//_______________________ft_child_process.c___________________________
+void		child_process(const t_cmd *cmd, t_env *env);
+void		wait_child_process(const t_cmd *cmd, t_env *env, int pid);
 
 //_______________________ft_check_args.c___________________________
 void		*ft_check_args(const t_cmd *cmd, t_env *env);

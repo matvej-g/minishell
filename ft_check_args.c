@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/12 13:05:50 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/12 14:10:12 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,33 @@ void	*ft_check_args(const t_cmd *cmd, t_env *env)
 	return (NULL);
 }
 
+void	execute_parent(const t_cmd *cmd, t_env *env)
+{
+	redirect_fd(cmd);
+	if (0 == ft_strcmp(cmd->args[0], "cd"))
+		ft_cd(cmd, env);
+	else if (0 == ft_strcmp(cmd->args[0], "export"))
+		ft_export(cmd, env);
+	else if (0 == ft_strcmp(cmd->args[0], "unset"))
+		ft_unset(cmd, env);
+}
+
+void	execute_child(const t_cmd *cmd, t_env *env)
+{
+	int	pid ;
+
+	pid = fork();
+	if (pid == 0)
+		child_process(cmd, env);
+	else if (pid > 0)
+		wait_child_process(cmd, env, pid);
+	else
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	redirect_fd(const t_cmd *cmd)
 {
 	if (cmd->input_fd != STDIN_FILENO)
@@ -62,51 +89,6 @@ void	redirect_fd(const t_cmd *cmd)
 	}
 }
 
-void	execute_parent(const t_cmd *cmd, t_env *env)
-{
-	redirect_fd(cmd);
-	if (0 == ft_strcmp(cmd->args[0], "cd"))
-		ft_cd(cmd, env);
-	else if (0 == ft_strcmp(cmd->args[0], "export"))
-		ft_export(cmd, env);
-	else if (0 == ft_strcmp(cmd->args[0], "unset"))
-		ft_unset(cmd, env);
-}
-
-void	execute_child(const t_cmd *cmd, t_env *env)
-{
-	int	pid ;
-	int	status;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		signal(SIGINT, child_signal_handler);
-		signal(SIGQUIT, child_signal_handler);
-		redirect_fd(cmd);
-		check_executable(cmd, env);
-		exit(EXIT_SUCCESS);
-	}
-	else if (pid > 0)
-	{
-		signal (SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			env->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			env->exit_status = 128 + WTERMSIG(status);
-		init_signal_handler();
-		if (cmd->input_fd != STDIN_FILENO)
-			close(cmd->input_fd);
-		if (cmd->output_fd != STDOUT_FILENO)
-			close(cmd->output_fd);
-	}
-	else
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-}
 void	check_executable(const t_cmd *cmd, t_env *env)
 {
 	if (0 == ft_strcmp(cmd->args[0], "echo"))
