@@ -6,19 +6,11 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:50:18 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/08 14:44:23 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:09:09 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_all(t_cmd *cmd, t_env *env)
-{
-	if (cmd)
-		free_cmd(cmd);
-	if (env)
-		free_env_lst(env);
-}
 
 void	free_cmd(t_cmd *cmd)
 {

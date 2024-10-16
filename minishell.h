@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/12 14:06:34 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:07:55 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_cmd
 	int				input_fd;
 	int				output_fd;
 	char			*heredoc_delimiter;
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }t_cmd;
 
@@ -69,12 +70,13 @@ void		ft_return_and_exit(char *error, int exit_status, t_env *env);
 void		ft_fd_rdr(t_cmd *temp);
 void		ft_fd_rdrapp(t_cmd *temp);
 void		ft_fd_rdr2(t_cmd *temp);
-void		ft_fd_heredoc(t_cmd *temp);
 void		ft_pipe(t_cmd *temp);
 int			ft_is_operator(char *str);
 int			ft_array_len(char **array, int i);
 void		ft_return_and_exit(char *error, int exit_status, t_env *env);
 int			ft_token_len(char *input, int i);
+void		ft_fd_heredoc(t_cmd *temp);
+void		ft_heredoc_process(t_cmd *temp, int pipe_fd);
 
 //_______________________input.c___________________________________
 char		*ft_get_input(t_env *env);
@@ -95,43 +97,51 @@ void		add_varlst_node(t_varlst **head, t_varlst *new_node);
 t_varlst	*new_varlst_node(char *var_name, char *var_value);
 
 //_______________________ft_child_process.c___________________________
-void		child_process(const t_cmd *cmd, t_env *env);
-void		wait_child_process(const t_cmd *cmd, t_env *env, int pid);
+void		child_process(t_cmd *cmd, t_env *env);
+void		wait_child_process(t_cmd *cmd, t_env *env, int pid);
+void		check_executable(t_cmd *cmd, t_env *env);
+void		close_unused_fds_in_child(t_cmd *cmd);
+void		redirect_fd(t_cmd *cmd);
 
 //_______________________ft_check_args.c___________________________
-void		*ft_check_args(const t_cmd *cmd, t_env *env);
-void		redirect_fd(const t_cmd *cmd);
-void		execute_parent(const t_cmd *cmd, t_env *env);
-void		execute_child(const t_cmd *cmd, t_env *env);
-void		check_executable(const t_cmd *cmd, t_env *env);
+void		*ft_check_args(t_cmd *cmd, t_env *env);
+void		execute_parent(t_cmd *cmd, t_env *env);
+void		execute_child(t_cmd *cmd, t_env *env);
+
+//_______________________ft_pipe_execution.c_______________________
+void		execute_pipe(t_cmd **cmd, t_env *env);
+void		fork_child_processes(t_cmd *cmd, t_env *env,
+				pid_t *pid, int num_cmds);
+void		close_fds_in_parent(t_cmd *cmd, int num_cmds);
+void		wait_for_children(t_cmd *cmd, t_env *env, pid_t *pid, int num_cmds);
 
 //_______________________ft_echo.c_________________________________
-char		*ft_append_char_struct(const t_cmd *cmd, int i);
-void		ft_echo(const t_cmd *cmd);
+char		*ft_append_char_struct(t_cmd *cmd, int i);
+void		ft_echo(t_cmd *cmd);
 
 //_______________________ft_cd.c___________________________________
-void		ft_cd(const t_cmd *cmd, t_env *env);
+void		ft_cd(t_cmd *cmd, t_env *env);
 void		check_home_path(t_varlst *varlst, char **path);
 
 //_______________________ft_pwd.c__________________________________
 void		ft_pwd(void);
 
 //_______________________ft_exe.c__________________________________
-void		ft_exe(const t_cmd *cmd, t_env *env);
-void		ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path);
-void		ft_exe3(const t_cmd *cmd, t_env *env, char *tmp, char **tmp_path);
+void		ft_exe(t_cmd *cmd, t_env *env);
+void		ft_exe2(t_cmd *cmd, t_env *env, char **tmp_path);
+void		ft_exe3(t_cmd *cmd, t_env *env, char *tmp, char **tmp_path);
 
 //_______________________ft_export.c_______________________________
-void		ft_export(const t_cmd *cmd, t_env *env);
-void		get_var_str(const t_cmd *cmd, char **var_name, char **var_value);
+void		ft_export(t_cmd *cmd, t_env *env);
+void		get_var_str(t_cmd *cmd, char **var_name, char **var_value);
 int			check_varlst(t_varlst *templst, char *var_name,
-				char *var_value, const t_cmd *cmd);
+				char *var_value, t_cmd *cmd);
 
 //_______________________ft_env.c__________________________________
 void		ft_env(t_env *env);
 
 //_______________________ft_unset.c_________________________________
-void		ft_unset(const t_cmd *cmd, t_env *env);
+void		ft_unset(t_cmd *cmd, t_env *env);
 
 //_______________________ft_exit.c_________________________________
 
@@ -147,6 +157,5 @@ void		init_signal_handler(void);
 void		free_all(t_cmd *cmd, t_env *env);
 void		free_cmd(t_cmd *cmd);
 void		free_env_lst(t_env *env);
-void		free_cmd_list(t_cmd *cmd);
 
 #endif

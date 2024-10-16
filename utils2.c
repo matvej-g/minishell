@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:57:29 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/11 15:41:53 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/13 15:34:58 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,45 +42,6 @@ void	ft_fd_rdr2(t_cmd *temp)
 		g_signal_received = 1;
 		perror("open");
 	}
-}
-
-void	ft_fd_heredoc(t_cmd *temp)
-{
-	int		pipe_fd[2];
-	char	*input;
-	int		pid;
-
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe failed");
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		signal(SIGINT, child_signal_handler);
-		while (1)
-		{
-			input = readline("heredoc> ");
-			if (input == NULL || ft_strcmp(input, temp->next->args[0]) == 0)
-			{
-				free(input);
-				exit(0);
-			}
-			write(pipe_fd[1], input, strlen(input));
-			write(pipe_fd[1], "\n", 1);
-			free(input);
-		}
-	}
-	else if (pid > 0)
-	{
-		signal (SIGINT, SIG_IGN);
-		wait(NULL);
-		init_signal_handler();
-		close(pipe_fd[1]);
-		temp->input_fd = pipe_fd[0];
-	}
-	else
-		perror("fork heredoc");
 }
 
 void	ft_pipe(t_cmd *temp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
+/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:56:22 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/12 13:57:20 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/13 16:00:23 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_return_and_exit(char *error, int exit_status, t_env *env)
 {
 	if (error == NULL)
-		printf("");
+		return ;
 	else
 		printf("%s\n", error);
 	env->exec_flag = 1;

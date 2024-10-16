@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 13:16:42 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/12 12:25:57 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:45:42 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_export(const t_cmd *cmd, t_env *env)
+void	ft_export(t_cmd *cmd, t_env *env)
 {
 	t_varlst	*templst;
 	char		*var_name;
@@ -25,7 +25,7 @@ void	ft_export(const t_cmd *cmd, t_env *env)
 	{
 		while (templst)
 		{
-			printf("%s=\"%s\"\n",
+			printf("declare -x %s=\"%s\"\n",
 				templst->var_name, templst->var_value);
 			templst = templst->next;
 		}
@@ -41,7 +41,7 @@ void	ft_export(const t_cmd *cmd, t_env *env)
 	return (free(var_name), free(var_value));
 }
 
-void	get_var_str(const t_cmd *cmd, char **var_name, char **var_value)
+void	get_var_str(t_cmd *cmd, char **var_name, char **var_value)
 {
 	char	**split;
 
@@ -63,7 +63,7 @@ void	get_var_str(const t_cmd *cmd, char **var_name, char **var_value)
 }
 
 int	check_varlst(t_varlst *templst, char *var_name,
-		char *var_value, const t_cmd *cmd)
+		char *var_value, t_cmd *cmd)
 {
 	while (templst)
 	{

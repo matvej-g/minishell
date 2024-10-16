@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 18:52:57 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/12 12:05:16 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:42:14 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_cd(const t_cmd *cmd, t_env *env)
+void	ft_cd(t_cmd *cmd, t_env *env)
 {
 	char		*path;
 	char		cwd[PATH_MAX];

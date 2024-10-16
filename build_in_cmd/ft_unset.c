@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:46:48 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/10 13:49:52 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:41:23 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_unset(const t_cmd *cmd, t_env *env)
+void	ft_unset(t_cmd *cmd, t_env *env)
 {
 	t_varlst	**current;
 	t_varlst	*temp;

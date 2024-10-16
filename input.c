@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/11 16:18:32 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/13 17:04:24 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_get_input(t_env *env)
 	}
 	else if (g_signal_received == 130)
 	{
-		env->exit_status = 130;
+		env->exit_status = 1;
 		return (input);
 	}
 	return (input);
@@ -70,8 +70,11 @@ int	ft_check_input(char *input, t_env *env)
 		ft_return_and_exit("Error: unclosed quotes", 2, env);
 		return (1);
 	}
-	ft_check_syntax(input, env);
-	ft_check_op(input, env);
-	ft_check_syntax_op(input, env);
+	if (env->exec_flag == 0)
+		ft_check_syntax(input, env);
+	if (env->exec_flag == 0)
+		ft_check_op(input, env);
+	if (env->exec_flag == 0)
+		ft_check_syntax_op(input, env);
 	return (0);
 }

@@ -6,11 +6,22 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:51:08 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/12 13:42:44 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:16:02 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_fix_help(t_cmd *current)
+{
+	t_cmd	*delete;
+
+	current->output_fd = current->next->output_fd;
+	delete = current->next;
+	current->next = current->next->next;
+	delete->next = NULL;
+	free_cmd(delete);
+}
 
 t_cmd	*ft_fix_struct(t_cmd *cmd_head)
 {
@@ -22,20 +33,12 @@ t_cmd	*ft_fix_struct(t_cmd *cmd_head)
 		&& current->next->operator
 		&& ft_strcmp(current->next->operator, "|") == 0)
 	{
-		current->output_fd = current->next->output_fd;
-		delete = current->next;
-		current->next = current->next->next;
-		delete->next = NULL;
-		free_cmd(delete);
+		ft_fix_help(current);
 	}
 	else if (current->operator && ft_strcmp(current->operator, "<<") == 0
 		&& current->next->operator)
 	{
-		current->output_fd = current->next->output_fd;
-		delete = current->next;
-		current->next = current->next->next;
-		delete->next = NULL;
-		free_cmd(delete);
+		ft_fix_help(current);
 	}
 	else if (current->operator && current->next && !current->next->operator
 		&& ft_strcmp(current->operator, "|") != 0)

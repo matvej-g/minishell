@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:05:08 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/11 14:44:42 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:41:54 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_exe(const t_cmd *cmd, t_env *env)
+void	ft_exe(t_cmd *cmd, t_env *env)
 {
 	char		**path;
 	char		**tmp_path;
@@ -41,7 +41,7 @@ void	ft_exe(const t_cmd *cmd, t_env *env)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path)
+void	ft_exe2(t_cmd *cmd, t_env *env, char **tmp_path)
 {
 	char		*tmp;
 
@@ -56,7 +56,7 @@ void	ft_exe2(const t_cmd *cmd, t_env *env, char **tmp_path)
 	}
 }
 
-void	ft_exe3(const t_cmd *cmd, t_env *env, char *tmp, char **tmp_path)
+void	ft_exe3(t_cmd *cmd, t_env *env, char *tmp, char **tmp_path)
 {
 	char	*dir_path;
 

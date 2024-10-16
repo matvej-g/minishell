@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:19:36 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/12 13:39:29 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:11:30 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ void	shell_loop(t_cmd *cmd, t_env *env)
 	g_signal_received = 0;
 	input = ft_get_input(env);
 	ft_check_input(input, env);
-	add_history(input);
+	if (input[0] != '\0')
+		add_history(input);
 	cmd = ft_parser(input, env);
 	ft_check_args(cmd, env);
 	env->exec_flag = 0;
 	free_cmd(cmd);
 }
 
-/* 
-//print_cmd_struct(cmd);
-void	print_cmd_struct(const t_cmd *cmd)
+/*	//print_cmd_struct(cmd);
+void	print_cmd_struct(t_cmd *cmd)
 {
 	int i = 0;
 
@@ -92,4 +92,16 @@ void	print_cmd_struct(const t_cmd *cmd)
 			break; // Exit the loop if there is no next command
 		}
 	}
-} */
+	while (cmd->prev != NULL)
+	{
+		if (cmd->prev)
+		{
+			printf("movind to prev...;");
+			cmd = cmd->prev;
+			printf("%s\n", cmd->args[0]);
+		}
+		else
+			break;
+	}
+}
+ */

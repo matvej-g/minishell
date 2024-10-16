@@ -6,13 +6,13 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:22:46 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/10 14:28:23 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:42:07 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(const t_cmd *cmd)
+void	ft_echo(t_cmd *cmd)
 {
 	char	*str_struct;
 
@@ -37,7 +37,7 @@ void	ft_echo(const t_cmd *cmd)
 		free(str_struct);
 }
 
-char	*ft_append_char_struct(const t_cmd *cmd, int i)
+char	*ft_append_char_struct(t_cmd *cmd, int i)
 {
 	char	*append;
 	int		len;
