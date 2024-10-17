@@ -6,11 +6,32 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:22:46 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/16 11:42:07 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 17:47:21 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_is_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	if (str[i] == 'n')
+	{
+		i++;
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				return (0);
+			i++;
+		}
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_echo(t_cmd *cmd)
 {
@@ -21,7 +42,7 @@ void	ft_echo(t_cmd *cmd)
 		printf("\n");
 		return ;
 	}
-	if (0 == ft_strcmp(cmd->args[1], "-n"))
+	if (ft_is_n(cmd->args[1]) == 1)
 	{
 		if (!cmd->args[2])
 			return ;

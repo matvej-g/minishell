@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 11:54:54 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/13 16:05:33 by merdal           ###   ########.fr       */
+/*   Updated: 2024/10/16 17:41:33 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	ft_check_syntax(char *input, t_env *env)
 		ft_return_and_exit("Error: syntax error pipes", 1, env);
 		return (1);
 	}
-	if (input[ft_strlen(input) - 1] == '>')
+	if (input[0] == '>' || input[ft_strlen(input) - 1] == '>')
 	{
 		ft_return_and_exit("Error: syntax error redirection", 1, env);
 		return (1);
 	}
-	if (input[ft_strlen(input) - 1] == '<')
+	if (input[0] == '<' || input[ft_strlen(input) - 1] == '<')
 	{
 		ft_return_and_exit("Error: syntax error redirection", 1, env);
 		return (1);

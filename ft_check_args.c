@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:23:00 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/16 15:06:23 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 17:55:07 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	execute_parent(t_cmd *cmd, t_env *env)
 		ft_export(cmd, env);
 	else if (0 == ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(cmd, env);
+	else if (0 == ft_strcmp(cmd->args[0], "exit"))
+		ft_exit(cmd, env);
 }
 
 void	execute_child(t_cmd *cmd, t_env *env)

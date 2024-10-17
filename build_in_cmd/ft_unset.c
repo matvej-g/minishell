@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:46:48 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/16 11:41:23 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:26:46 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,24 @@ void	ft_unset(t_cmd *cmd, t_env *env)
 {
 	t_varlst	**current;
 	t_varlst	*temp;
+	int			i;
 
-	current = &env->envp_list;
-	while (*current)
+	i = 0;
+	while (cmd->args[++i])
 	{
-		if (ft_strcmp(cmd->args[1], (*current)->var_name) == 0)
+		current = &env->envp_list;
+		while (*current)
 		{
-			temp = *current;
-			*current = (*current)->next;
-			free(temp->var_name);
-			free(temp->var_value);
-			free(temp);
-			return ;
+			if (ft_strcmp(cmd->args[i], (*current)->var_name) == 0)
+			{
+				temp = *current;
+				*current = (*current)->next;
+				free(temp->var_name);
+				free(temp->var_value);
+				free(temp);
+			}
+			else
+				current = &(*current)->next;
 		}
-		else
-			current = &(*current)->next;
 	}
 }

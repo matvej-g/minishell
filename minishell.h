@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/16 15:07:55 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:46:30 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		redirect_fd(t_cmd *cmd);
 void		*ft_check_args(t_cmd *cmd, t_env *env);
 void		execute_parent(t_cmd *cmd, t_env *env);
 void		execute_child(t_cmd *cmd, t_env *env);
+void		ft_exit(const t_cmd *cmd, t_env *env);
 
 //_______________________ft_pipe_execution.c_______________________
 void		execute_pipe(t_cmd **cmd, t_env *env);
@@ -133,9 +134,10 @@ void		ft_exe3(t_cmd *cmd, t_env *env, char *tmp, char **tmp_path);
 
 //_______________________ft_export.c_______________________________
 void		ft_export(t_cmd *cmd, t_env *env);
-void		get_var_str(t_cmd *cmd, char **var_name, char **var_value);
+void		cmd_export(t_varlst *templst);
+int			get_var_str(t_cmd *cmd, char **var_name, char **var_value, int i);
 int			check_varlst(t_varlst *templst, char *var_name,
-				char *var_value, t_cmd *cmd);
+				char *var_value, char *args);
 
 //_______________________ft_env.c__________________________________
 void		ft_env(t_env *env);

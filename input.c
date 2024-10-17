@@ -6,18 +6,57 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:54:14 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/13 17:04:24 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/16 17:40:44 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int ft_check_op_end(char *input, t_env *env)
+{
+    int i = 0;
+	const char *operators[] = {">>", ">", "<<", "<", "|", NULL};
+
+    while (input[i] != '\0')
+    {
+        int j = 0;
+        int operator_found = 0;
+
+        while (operators[j] != NULL)
+        {
+            int op_len = strlen(operators[j]);
+            if (ft_strncmp(&input[i], operators[j], op_len) == 0)
+            {
+                operator_found = 1;
+                i += op_len;
+                while (input[i] != '\0' && isspace((unsigned char)input[i]))
+                    i++;
+                if (input[i] == '\0')
+                {
+                    ft_return_and_exit("Error: syntax error operator", 1, env);
+                    return (1);
+                }
+                if (isspace((unsigned char)input[i]))
+                {
+                    ft_return_and_exit("Error: syntax error operator", 1, env);
+                    return (1);
+                }
+                break;
+            }
+            j++;
+        }
+        if (operator_found == 0)
+            i++;
+    }
+    return (0);
+}
 
 char	*ft_get_input(t_env *env)
 {
 	char	*input;
 
 	input = readline(" -- minishell -- $ ");
-	if (input == NULL || ft_strnstr(input, "exit", 4) != NULL)
+	if (input == NULL)
 	{
 		free_env_lst(env);
 		printf("exit\n");
@@ -72,6 +111,8 @@ int	ft_check_input(char *input, t_env *env)
 	}
 	if (env->exec_flag == 0)
 		ft_check_syntax(input, env);
+	if (env->exec_flag == 0)
+		ft_check_op_end(input, env);
 	if (env->exec_flag == 0)
 		ft_check_op(input, env);
 	if (env->exec_flag == 0)
