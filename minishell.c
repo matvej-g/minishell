@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:19:36 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/16 15:11:30 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:40:26 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	shell_loop(t_cmd *cmd, t_env *env)
 	free_cmd(cmd);
 }
 
-/*	//print_cmd_struct(cmd);
+/* 	print_cmd_struct(cmd);
 void	print_cmd_struct(t_cmd *cmd)
 {
 	int i = 0;

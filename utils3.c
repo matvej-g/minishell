@@ -6,11 +6,27 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:53:02 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/13 15:45:23 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 17:05:26 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**ft_init_op(void)
+{
+	char	**operators;
+
+	operators = malloc(sizeof(char *) * 6);
+	if (!operators)
+		return (NULL);
+	operators[0] = ">>";
+	operators[1] = ">";
+	operators[2] = "<";
+	operators[3] = "<<";
+	operators[4] = "|";
+	operators[5] = NULL;
+	return (operators);
+}
 
 int	ft_is_operator(char *str)
 {

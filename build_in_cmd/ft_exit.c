@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:06:58 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/15 12:49:10 by merdal           ###   ########.fr       */
+/*   Updated: 2024/10/17 15:21:07 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_check_alpha(const char *str)
+int	ft_check_alpha(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (ft_isalpha(str[i]) == 1)
@@ -26,9 +28,9 @@ int	ft_check_alpha(const char *str)
 	return (0);
 }
 
-void	ft_exit(const t_cmd *cmd, t_env *env)
+void	ft_exit(t_cmd *cmd, t_env *env)
 {
-	if (cmd->args[2])
+	if (cmd->args[1] && cmd->args[2])
 	{
 		free_env_lst(env);
 		printf("exit\n");

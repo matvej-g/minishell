@@ -6,11 +6,17 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:56:22 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/16 17:45:29 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:00:11 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_isspace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r');
+}
 
 void	ft_return_and_exit(char *error, int exit_status, t_env *env)
 {

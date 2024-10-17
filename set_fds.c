@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 14:51:08 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/16 15:16:02 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:57:02 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	ft_fix_help(t_cmd *current)
 	current->output_fd = current->next->output_fd;
 	delete = current->next;
 	current->next = current->next->next;
+	if (current->next != NULL)
+		current->next->prev = current;
 	delete->next = NULL;
+	delete->prev = NULL;
 	free_cmd(delete);
 }
 
