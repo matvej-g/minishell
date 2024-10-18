@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:56:22 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/17 15:00:11 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:01:48 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ int	ft_skip_quotes(char *input, int *i)
 	if (input[*i] == quotes)
 		(*i)++;
 	return (1);
+}
+
+char	*ft_cut(char *input, int i, int len)
+{
+	char	*cut;
+	int		j;
+
+	j = 0;
+	cut = malloc(sizeof(char) * len + 1);
+	if (!cut)
+		return (NULL);
+	while (input[i] != ' ' && input[i])
+	{
+		cut[j] = input[i];
+		i++;
+		j++;
+	}
+	cut[j] = '\0';
+	return (cut);
 }
 
 int	ft_token_len(char *input, int i)

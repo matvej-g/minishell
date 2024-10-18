@@ -6,30 +6,11 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 11:12:32 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/17 15:01:38 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:01:04 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_cut(char *input, int i, int len)
-{
-	char	*cut;
-	int		j;
-
-	j = 0;
-	cut = malloc(sizeof(char) * len + 1);
-	if (!cut)
-		return (NULL);
-	while (input[i] != ' ' && input[i])
-	{
-		cut[j] = input[i];
-		i++;
-		j++;
-	}
-	cut[j] = '\0';
-	return (cut);
-}
 
 char	*ft_expand(char *input, int *i, t_env *env)
 {
@@ -43,6 +24,15 @@ char	*ft_expand(char *input, int *i, t_env *env)
 	*i = *i + len;
 	free(cut_token);
 	return (token);
+}
+
+char	*ft_quote_dollar(char *token, t_env *env)
+{
+	char	*new_token;
+
+	new_token = ft_handle_dollar(token, env);
+	free(token);
+	return (new_token);
 }
 
 char	*ft_handle_quotes(char *input, int *i, t_env *env)
@@ -70,7 +60,7 @@ char	*ft_handle_quotes(char *input, int *i, t_env *env)
 	token[len] = '\0';
 	(*i)++;
 	if (token[0] == '$' && quote == '\"')
-		return (ft_handle_dollar(token, env));
+		return (ft_quote_dollar(token, env));
 	return (token);
 }
 

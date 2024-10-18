@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 14:05:12 by mgering           #+#    #+#             */
-/*   Updated: 2024/10/16 15:10:41 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:13:15 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	check_executable(t_cmd *cmd, t_env *env)
 	if (0 == ft_strcmp(cmd->args[0], "echo"))
 		ft_echo(cmd);
 	else if (0 == ft_strcmp(cmd->args[0], "pwd"))
+		ft_pwd();
+	else if (0 == ft_strcmp(cmd->args[0], "PWD"))
 		ft_pwd();
 	else if (0 == ft_strcmp(cmd->args[0], "env"))
 		ft_env(env);

@@ -6,7 +6,7 @@
 /*   By: mgering <mgering@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:07:42 by merdal            #+#    #+#             */
-/*   Updated: 2024/10/17 17:02:34 by mgering          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:03:56 by mgering          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		ft_fd_heredoc(t_cmd *temp);
 void		ft_heredoc_process(t_cmd *temp, int pipe_fd);
 int			ft_isspace(char c);
 char		**ft_init_op(void);
-void		ft_free_op(char **operators);
+char		*ft_cut(char *input, int i, int len);
 
 //_______________________input.c___________________________________
 char		*ft_get_input(t_env *env);
