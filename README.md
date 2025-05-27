@@ -1,6 +1,6 @@
 # minishell
 
-[![License](https://img.shields.io/badge/license-Unlicense-blue)](/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A lightweight, Norm-compliant Unix shell in C, supporting command execution, pipes, redirections, built-ins, and basic signal handling.
 
@@ -11,9 +11,6 @@ A lightweight, Norm-compliant Unix shell in C, supporting command execution, pip
 - [Features](#features)  
 - [Installation](#installation)  
 - [Usage](#usage)  
-- [Built-ins](#built-ins)  
-- [Examples](#examples)  
-- [Notes](#notes)  
 
 ## Contributors
 
@@ -52,3 +49,12 @@ A lightweight, Norm-compliant Unix shell in C, supporting command execution, pip
    ```bash
    git clone https://github.com/YourUsername/minishell.git
    cd minishell
+   make
+   ```
+
+## Usage
+
+Run the executable `minishell` and use it like the normal Shell UNIX environemnt.
+  ```bash
+  ./minishell
+  ```
